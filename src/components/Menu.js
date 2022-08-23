@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BarTube from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
+import { Link } from "react-router-dom";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
@@ -20,7 +21,7 @@ import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightne
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.bgLighter};
-  height: 100vh;
+  height: 130vh;
   flex: 1;
   color: ${({ theme }) => theme.text};
   font-size: 12px;
@@ -43,6 +44,9 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 5.5px 0px;
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
+  }
 `;
 
 const Hr = styled.hr`
@@ -78,10 +82,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
-        <Logo>
-          <Img src={BarTube} />
-          BarTube
-        </Logo>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Logo>
+            <Img src={BarTube} />
+            BarTube
+          </Logo>
+        </Link>
         <Item>
           <HomeIcon />
           Home
@@ -106,10 +112,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
         <Hr />
         <Login>
           Sign in to like videos, comment and subscribe.
+           <Link to="/signin" style={{ textDecoration: "none" }}>
           <Button>
             <AccountCircleOutlinedIcon />
             SIGN IN
           </Button>
+          </Link>
         </Login>
         <Hr />
         <Title>BEST OF BARTUBE</Title>
@@ -152,7 +160,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
         </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
-          Light Mode
+          {darkMode ? "Light" : "Dark"} Mode
         </Item>
       </Wrapper>
     </Container>
