@@ -1,6 +1,8 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { format } from "timeago.js";
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -49,23 +51,32 @@ const Info = styled.div`
   color: ${({ theme }) => theme.textSoft};
 `;
 
-const Card = ({ type }) => {
+const Card = ({ type, video }) => {
+  const [channel, setChannel] = useState({});
+
+  useEffect(() => {
+    const fetchChannel = async () => {
+      const res = await axios.get(`/users/find/${video.userId}`);
+      setChannel(res.data);
+    };
+    fetchChannel();
+  }, [video.userId]);
+
   return (
     <Link to="/video/test" style={{ textDecoration: "none" }}>
       <Container type={type}>
-        <Image
-          type={type}
-          src="https://upload.wikimedia.org/wikipedia/en/e/e9/Maccabi_Tel_Aviv.png"
-        />
+        <Image type={type} src={video.imgUrl} />
         <Details type={type}>
           <ChannelImage
             type={type}
-            src="https://img.freepik.com/premium-photo/oh-my-god-portrait-astonished-handsome-man-denim-casual-shirt-looking-camera-with-big-amazed-eyes-saying-wow-shocked-by-unbelievable-news-indoor-studio-shot-isolated-yellow-background_416530-21128.jpg?w=2000"
+            src={channel.img}
           />
           <Texts>
-            <Title>Test Video</Title>
-            <ChannelName>Bar Varona</ChannelName>
-            <Info>555,555 views - 1 day ago </Info>
+            <Title>{video.Title}</Title>
+            <ChannelName>{channel.name}</ChannelName>
+            <Info>
+              {video.views} views - {format(video.createdAt)}
+            </Info>
           </Texts>
         </Details>
       </Container>
