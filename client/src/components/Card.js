@@ -69,7 +69,7 @@ const Card = ({ type, video }) => {
         <Details type={type}>
           <ChannelImage type={type} src={channel.img} />
           <Texts>
-            <Title>{video.Title}</Title>
+            <Title>{video.title}</Title>
             <ChannelName>{channel.name}</ChannelName>
             <Info>
               {video.views} views - {format(video.createdAt)}
